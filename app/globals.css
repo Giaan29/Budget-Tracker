@@ -1,0 +1,170 @@
+@import "tailwindcss";
+
+:root {
+  --paper: #f6f4ef;
+  --surface: #fbfaf7;
+  --ink: #1b1a17;
+  --muted: #6b675e;
+  --rule: #ddd8cc;
+  --accent: #1f5c46;
+  --accent-strong: #174535;
+  --negative: #a63d2f;
+  --positive: #2f6b4f;
+  --focus: #1f5c46;
+}
+
+@theme inline {
+  --color-paper: var(--paper);
+  --color-surface: var(--surface);
+  --color-ink: var(--ink);
+  --color-muted: var(--muted);
+  --color-rule: var(--rule);
+  --color-accent: var(--accent);
+  --color-accent-strong: var(--accent-strong);
+  --color-negative: var(--negative);
+  --color-positive: var(--positive);
+  --font-sans: var(--font-plex-sans), ui-sans-serif, system-ui, sans-serif;
+  --font-mono: var(--font-plex-mono), ui-monospace, "SFMono-Regular", monospace;
+}
+
+@layer base {
+  * {
+    border-color: var(--rule);
+  }
+
+  html {
+    background: var(--paper);
+    -webkit-text-size-adjust: 100%;
+  }
+
+  body {
+    background: var(--paper);
+    color: var(--ink);
+    font-family: var(--font-plex-sans), ui-sans-serif, system-ui, sans-serif;
+    font-size: 16px;
+    line-height: 1.5;
+  }
+
+  h1,
+  h2,
+  h3 {
+    text-wrap: balance;
+  }
+
+  button,
+  input,
+  select,
+  textarea {
+    font: inherit;
+    font-size: 16px;
+    color: inherit;
+  }
+
+  button:not(:disabled),
+  [role="button"]:not(:disabled) {
+    cursor: pointer;
+  }
+
+  ::selection {
+    background: color-mix(in srgb, var(--accent) 22%, transparent);
+  }
+
+  :focus-visible {
+    outline: 2px solid var(--focus);
+    outline-offset: 2px;
+  }
+
+  @media (prefers-reduced-motion: reduce) {
+    *,
+    *::before,
+    *::after {
+      animation-duration: 0.01ms !important;
+      animation-iteration-count: 1 !important;
+      transition-duration: 0.01ms !important;
+      scroll-behavior: auto !important;
+    }
+  }
+}
+
+@layer components {
+  .num {
+    font-family: var(--font-plex-mono), ui-monospace, "SFMono-Regular", monospace;
+    font-variant-numeric: tabular-nums;
+    letter-spacing: -0.015em;
+  }
+
+  .sr-only-focusable:not(:focus):not(:focus-within) {
+    position: absolute;
+    width: 1px;
+    height: 1px;
+    padding: 0;
+    margin: -1px;
+    overflow: hidden;
+    clip: rect(0, 0, 0, 0);
+    white-space: nowrap;
+    border-width: 0;
+  }
+
+  dialog.sheet {
+    width: 100%;
+    max-width: 100%;
+    height: 100dvh;
+    max-height: 100dvh;
+    margin: 0;
+    padding: 0;
+    border: 0;
+    background: var(--surface);
+    color: var(--ink);
+  }
+
+  dialog.sheet::backdrop {
+    background: color-mix(in srgb, var(--ink) 42%, transparent);
+  }
+
+  .sheet-panel {
+    display: flex;
+    min-height: 100dvh;
+    flex-direction: column;
+    background: var(--surface);
+  }
+
+  dialog.confirm {
+    width: min(26rem, calc(100vw - 2rem));
+    margin: auto;
+    padding: 0;
+    border: 1px solid var(--rule);
+    border-radius: 6px;
+    background: var(--surface);
+    color: var(--ink);
+  }
+
+  dialog.confirm::backdrop {
+    background: color-mix(in srgb, var(--ink) 42%, transparent);
+  }
+}
+
+@media (min-width: 1024px) {
+  dialog.sheet {
+    width: min(36rem, calc(100vw - 4rem));
+    height: auto;
+    max-height: calc(100dvh - 4rem);
+    margin: auto;
+    border: 1px solid var(--rule);
+    border-radius: 6px;
+  }
+
+  .sheet-panel {
+    min-height: 0;
+    max-height: calc(100dvh - 4rem);
+  }
+}
+
+@layer utilities {
+  .pb-safe {
+    padding-bottom: max(0.5rem, env(safe-area-inset-bottom));
+  }
+
+  .pb-safe-lg {
+    padding-bottom: max(1.5rem, env(safe-area-inset-bottom));
+  }
+}
